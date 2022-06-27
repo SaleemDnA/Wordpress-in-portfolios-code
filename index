@@ -1,0 +1,59 @@
+function create_portfoliotype()
+{
+	register_post_type(
+		'portfolio',
+		// CPT Options
+
+		array(
+			'labels' => array(
+				'name' => __('portfolio'),
+				'singular_name' => __('portfolio')
+			),
+			'public' => true,
+			'has_archive' => false,
+			'rewrite' => array('slug' => 'portfolio'),
+		)
+	);
+}
+// Hooking up our function to theme setup
+add_action('init', 'create_posttype');
+/*Custom Post type start*/
+function cw_post_type_portfolio()
+{
+	$supports = array(
+		'title', // post title
+		'editor', // post content
+		'author', // post author
+		'thumbnail', // featured images
+		'excerpt', // post excerpt
+		'custom-fields', // custom fields
+		'comments', // post comments
+		'revisions', // post revisions
+		'post-formats', // post formats
+	);
+	$portfolio_labels = array( 
+		'name' => _x('portfolio', 'plural'),
+		'singular_name' => _x('portfolio', 'singular'),
+		'menu_name' => _x('portfolio', 'admin menu'),
+		'name_admin_bar' => _x('portfolio', 'admin bar'),
+		'add_new' => _x('Add New', 'add new'),
+		'add_new_item' => __('Add New portfolio'),
+		'new_item' => __('New portfolio'),
+		'edit_item' => __('Edit portfolio'),
+		'view_item' => __('View portfolio'),
+		'all_items' => __('All portfolio'),
+		'search_items' => __('Search portfolio'),
+		'not_found' => __('No portfolio found.'),
+	);
+	$portfolio_args = array(
+		'supports' => $supports,
+		'labels' => $portfolio_labels,
+		'public' => true,
+		'query_var' => true,
+		'rewrite' => array('slug' => 'portfolio'),
+		'has_archive' => true,
+		'hierarchical' => false,
+	);
+	register_post_type('portfolio', $portfolio_args);
+}
+add_action('init', 'cw_post_type_portfolio');
